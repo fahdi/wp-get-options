@@ -38,14 +38,14 @@ function fm_my_cool_plugin_settings_page() {
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">A cool option</th>
-                    <td><input type="text" name="a_cool_option"
+                    <td><input type="text" name="a_cool_option" size="40"
                                value="<?php echo esc_attr( get_option( 'a_cool_option' ) ); ?>"/>
                     </td>
                 </tr>
 
                 <tr valign="top">
                     <th scope="row">Another cool option</th>
-                    <td><input type="text" name="another_cool_option"
+                    <td><input type="text" name="another_cool_option" size="40"
                                value="<?php echo esc_attr( get_option( 'another_cool_option' ) ); ?>"/>
                     </td>
                 </tr>
@@ -60,11 +60,12 @@ function fm_my_cool_plugin_settings_page() {
 
 
 function fm_get_cool_stuff( $atts ) {
-	$a = shortcode_atts( [
+	$atts = shortcode_atts( [
 		'option' => 'a_cool_option' # defaults to a_cool_option
-	], $atts );
+	], $atts, 'getcoolstuff' );
 
-	return get_option( $a['option'] );
+
+	return get_option( $atts['option'] );
 }
 
 add_shortcode( 'getcoolstuff', 'fm_get_cool_stuff' );
