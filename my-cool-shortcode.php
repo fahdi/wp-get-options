@@ -30,7 +30,7 @@ function fm_register_my_cool_plugin_settings() {
 function fm_my_cool_plugin_settings_page() {
 	?>
     <div class="wrap">
-        <h1>Your Plugin Name</h1>
+        <h1>Your Cool Options</h1>
 
         <form method="post" action="options.php">
 			<?php settings_fields( 'my-cool-plugin-settings-group' ); ?>
