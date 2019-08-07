@@ -14,18 +14,17 @@ add_action( 'admin_menu', 'fm_my_cool_plugin_create_menu' );
 function fm_my_cool_plugin_create_menu() {
 
 	//create new top-level menu
-	add_menu_page( 'My Cool Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page', plugins_url( '/images/icon.png', __FILE__ ) );
+	add_menu_page( 'My Cool Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'fm_my_cool_plugin_settings_page', 'dashicons-welcome-write-blog' );
 
 	//call register settings function
-	add_action( 'admin_init', 'register_my_cool_plugin_settings' );
+	add_action( 'admin_init', 'fm_register_my_cool_plugin_settings' );
 }
 
 
 function fm_register_my_cool_plugin_settings() {
 	//register our settings
-	register_setting( 'my-cool-plugin-settings-group', 'fm_new_option_name' );
-	register_setting( 'my-cool-plugin-settings-group', 'fm_some_other_option' );
-	register_setting( 'my-cool-plugin-settings-group', 'fm_option_etc' );
+	register_setting( 'my-cool-plugin-settings-group', 'a_cool_option' );
+	register_setting( 'my-cool-plugin-settings-group', 'another_cool_option' );
 }
 
 function fm_my_cool_plugin_settings_page() {
@@ -38,25 +37,19 @@ function fm_my_cool_plugin_settings_page() {
 			<?php do_settings_sections( 'my-cool-plugin-settings-group' ); ?>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row">New Option Name</th>
-                    <td><input type="text" name="fm_new_option_name"
-                               value="<?php echo esc_attr( get_option( 'fm_new_option_name' ) ); ?>"/>
+                    <th scope="row">A cool option</th>
+                    <td><input type="text" name="a_cool_option"
+                               value="<?php echo esc_attr( get_option( 'a_cool_option' ) ); ?>"/>
                     </td>
                 </tr>
 
                 <tr valign="top">
-                    <th scope="row">Some Other Option</th>
-                    <td><input type="text" name="fm_some_other_option"
-                               value="<?php echo esc_attr( get_option( 'fm_some_other_option' ) ); ?>"/>
+                    <th scope="row">Another cool option</th>
+                    <td><input type="text" name="another_cool_option"
+                               value="<?php echo esc_attr( get_option( 'another_cool_option' ) ); ?>"/>
                     </td>
                 </tr>
 
-                <tr valign="top">
-                    <th scope="row">Options, Etc.</th>
-                    <td><input type="text" name="fm_option_etc"
-                               value="<?php echo esc_attr( get_option( 'fm_option_etc' ) ); ?>"/>
-                    </td>
-                </tr>
             </table>
 
 			<?php submit_button(); ?>
@@ -66,9 +59,12 @@ function fm_my_cool_plugin_settings_page() {
 <?php }
 
 
-function fm_get_cool_stuff($atts) {
-	return '';
+function fm_get_cool_stuff( $atts ) {
+	$a = shortcode_atts( [
+		'option' => 'a_cool_option' # defaults to a_cool_option
+	], $atts );
+
+	return get_option( $a['option'] );
 }
 
-
-add_shortcode('getcoolstuff', 'fm_get_cool_stuff');
+add_shortcode( 'getcoolstuff', 'fm_get_cool_stuff' );
